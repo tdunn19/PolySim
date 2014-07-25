@@ -16,6 +16,9 @@ Vector3D::Vector3D(const Vector3D& v) {
   z = v.z;
 }
 
+Vector3D::~Vector3D() {
+}
+
 Vector3D Vector3D::operator+ (const Vector3D& v) const {
   return Vector3D((x + v.x), (y + v.y), (z + v.z));
 }
@@ -24,8 +27,12 @@ Vector3D Vector3D::operator- (const Vector3D& v) const {
   return Vector3D((x - v.x), (y - v.y), (z - v.z));
 }
 
-Vector3D Vector3D::operator* (double a) const {
-  return Vector3D((x * a), (y * a), (z * a));
+Vector3D operator* (double a, const Vector3D& v) {
+  return Vector3D((v.x * a), (v.y * a), (v.z * a));
+}
+
+Vector3D operator* (const Vector3D& v, double a) {
+  return a * v;
 }
 
 Vector3D Vector3D::operator/ (double a) const {
@@ -60,35 +67,29 @@ Vector3D Vector3D::operator*= (double a) {
   return *this;
 }
 
-bool Vector3D::operator==(const Vector3D& v) {
+Vector3D Vector3D::operator/= (double a) {
+  x /= a;
+  y /= a;
+  z /= a;
+  return *this;
+}
+
+bool Vector3D::operator== (const Vector3D& v) {
   return (std::fabs(x - v.x) < std::numeric_limits<double>::epsilon() &&
           std::fabs(y - v.y) < std::numeric_limits<double>::epsilon() &&
           std::fabs(z - v.z) < std::numeric_limits<double>::epsilon());
 }
 
-std::istream& operator>>(std::istream& in, Vector3D& v) {
+std::istream& operator>> (std::istream& in, Vector3D& v) {
   in >> v.x;
   in >> v.y;
   in >> v.z;
   return in;
 }
 
-std::ostream& operator<<(std::ostream& out, const Vector3D& v) {
-  out << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+std::ostream& operator<< (std::ostream& out, const Vector3D& v) {
+  out << v.x << " " << v.y << " " << v.z;
   return out;
-}
-
-Vector3D Vector3D::reverse() const {
-  return Vector3D(-x, -y, -z);
-}
-
-Vector3D Vector3D::normalize() const {
-  double mag = length();
-  if (mag > 0) {
-    return (*this / mag);
-  } else {
-    return Vector3D();
-  }
 }
 
 void Vector3D::zero() {
@@ -109,3 +110,19 @@ double Vector3D::dotProduct(const Vector3D& v) const {
   return (v.x * x) + (v.y * y) + (v.z * z);
 }
 
+Vector3D Vector3D::reverse() const {
+  return Vector3D(-x, -y, -z);
+}
+
+Vector3D Vector3D::normalize() const {
+  double mag = length();
+  if (mag > 0) {
+    return (*this / mag);
+  } else {
+    return Vector3D();
+  }
+}
+
+Vector3D Vector3D::crossProduct(const Vector3D& v) const {
+  return Vector3D(y*v.z - z*v.y, z*v.x - x*v.z, x*v.y - y*v.x);
+}

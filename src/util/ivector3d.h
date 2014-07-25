@@ -2,31 +2,33 @@
 #define IVECTOR3D_H
 
 #include <iostream>
-#include "vector3d.h"
+#include <cmath>
 
 class IVector3D {
  public:
   int x, y, z;
 
-  // Constructors
   IVector3D();
   IVector3D(int a, int b, int c);
   IVector3D(const IVector3D &v);
+  ~IVector3D();
 
-  // Operator overloadings
-  IVector3D operator+ (IVector3D v);
-  IVector3D operator- (IVector3D v);
-  Vector3D operator* (double a);
-  IVector3D operator= (IVector3D v);
-  IVector3D operator+= (IVector3D v);
-  IVector3D operator*= (double a);
-  friend std::ostream& operator<< (std::ostream &out, IVector3D &v);
+  IVector3D operator+ (const IVector3D& v) const;
+  IVector3D operator- (const IVector3D& v) const;
+  friend IVector3D operator* (int a, const IVector3D& v);
+  friend IVector3D operator* (const IVector3D& v, int a);
+  IVector3D operator= (const IVector3D& v);
+  IVector3D operator+= (const IVector3D& v);
+  IVector3D operator-= (const IVector3D& v);
+  IVector3D operator*= (int a);
+  bool operator== (const IVector3D& v);
+  friend std::istream& operator>> (std::istream &in, IVector3D& v);
+  friend std::ostream& operator<< (std::ostream &out, const IVector3D& v);
 
-  // Other functions
-  void reverse();
   void zero();
-  double length();
-  double length_squared();
+  double length() const;
+  double lengthSquared() const;
+  IVector3D reverse() const;
 };
 
 #endif // IVECTOR3D_H

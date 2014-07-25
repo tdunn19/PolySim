@@ -1,5 +1,3 @@
-#include <cmath>
-
 #include "ivector3d.h"
 
 IVector3D::IVector3D() {
@@ -18,48 +16,67 @@ IVector3D::IVector3D(const IVector3D &v) {
   z = v.z;
 }
 
-IVector3D IVector3D::operator+ (IVector3D v) {
+IVector3D::~IVector3D() {
+}
+
+IVector3D IVector3D::operator+ (const IVector3D& v) const {
   return IVector3D((x + v.x), (y + v.y), (z + v.z));
 }
 
-IVector3D IVector3D::operator- (IVector3D v) {
+IVector3D IVector3D::operator- (const IVector3D& v) const {
   return IVector3D((x - v.x), (y - v.y), (z - v.z));
 }
 
-Vector3D IVector3D::operator* (double a) {
-  return Vector3D((x * a), (y * a), (z * a));
+IVector3D operator* (int a, const IVector3D& v) {
+  return IVector3D((v.x * a), (v.y * a), (v.z * a));
 }
 
-IVector3D IVector3D::operator= (IVector3D v) {
+IVector3D operator* (const IVector3D& v, int a) {
+  return a * v;
+}
+
+IVector3D IVector3D::operator= (const IVector3D& v) {
   x = v.x;
   y = v.y;
   z = v.z;
   return *this;
 }
 
-IVector3D IVector3D::operator+= (IVector3D v) {
+IVector3D IVector3D::operator+= (const IVector3D& v) {
   x += v.x;
   y += v.y;
   z += v.z;
   return *this;
 }
 
-IVector3D IVector3D::operator*= (double a) {
+IVector3D IVector3D::operator-= (const IVector3D& v) {
+  x -= v.x;
+  y -= v.y;
+  z -= v.z;
+  return *this;
+}
+
+IVector3D IVector3D::operator*= (int a) {
   x *= a;
   y *= a;
   z *= a;
   return *this;
 }
 
-std::ostream& operator<< (std::ostream &out, IVector3D &v) {
-  out << "(" << v.x << ", " << v.y << ", " << v.z << ")";
-  return out;
+bool IVector3D::operator== (const IVector3D& v) {
+  return ((x == v.x) && (y == v.y) && (z == v.z));
 }
 
-void IVector3D::reverse() {
-  x = -x;
-  y = -y;
-  z = -z;
+std::istream& operator>> (std::istream& in, IVector3D& v) {
+  in >> v.x;
+  in >> v.y;
+  in >> v.z;
+  return in;
+}
+
+std::ostream& operator<< (std::ostream &out, const IVector3D &v) {
+  out << v.x << " " << v.y << " " << v.z;
+  return out;
 }
 
 void IVector3D::zero() {
@@ -68,10 +85,15 @@ void IVector3D::zero() {
   z = 0;
 }
 
-double IVector3D::length() {
+double IVector3D::length() const {
   return sqrt((x * x) + (y * y) + (z * z));
 }
 
-double IVector3D::length_squared() {
+double IVector3D::lengthSquared() const {
   return (x * x) + (y * y) + (z * z);
 }
+
+IVector3D IVector3D::reverse() const {
+  return IVector3D(-x, -y, -z);
+}
+
