@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../src/util/vector3d.h"
+#include "../../src/util/vector3d.h"
 
 TEST(Vector3DTest, Construction) {
   Vector3D v1;

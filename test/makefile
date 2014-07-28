@@ -17,8 +17,8 @@ GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
 								$(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h
 
-TESTS = vector3d_test.o ivector3d_test.o random_test.o
-OBJS = ../obj/util/vector3d.o ../obj/util/ivector3d.o ../obj/util/random.o
+TESTS = util/vector3d_test.o util/ivector3d_test.o util/random_test.o base/box_test.o
+OBJS = ../obj/util/vector3d.o ../obj/util/ivector3d.o ../obj/util/random.o ../obj/base/box.o
 
 .PHONY: clean
 
@@ -26,10 +26,10 @@ OBJS = ../obj/util/vector3d.o ../obj/util/ivector3d.o ../obj/util/random.o
 all : gtest_main.a $(TESTS) $(OBJS)
 	$(CC) $(CFLAGS) $(INCS) -lpthread $^ -o $(OUT)
 
-vector3d_test.o : vector3d_test.cpp ../obj/util/vector3d.o $(GTEST_HEADERS)
-	$(CC) $(CFLAGS) $(INCS) -c vector3d_test.cpp	
+$(TESTS) : %.o : %.cpp $(GTEST_HEADERS)
+	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
-../obj/%.o : ../src/%.cpp
+$(OBJS) : ../obj/%.o : ../src/%.cpp
 	make -C .. all
 
 gtest-all.o : $(GTEST_SRCS) $(GTEST_HEADERS)
@@ -45,5 +45,7 @@ gtest_main.a : gtest-all.o gtest_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
 clean :
-	rm -f gtest.a gtest_main.a *.o $(OUT)
+	rm -f gtest.a gtest_main.a *.o */*.o $(OUT)
 
+
+#$(TESTS) : %.o : %.cpp $(GTEST_HEADERS)

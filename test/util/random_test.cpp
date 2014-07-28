@@ -1,7 +1,7 @@
 #include <vector>
 
 #include "gtest/gtest.h"
-#include "../src/util/random.h"
+#include "../../src/util/random.h"
 
 TEST(RandomTest, Construction) {
   Random r1;
@@ -18,6 +18,7 @@ TEST(RandomTest, UniformReal) {
   int num_samples = 10000;
   double x, sum, mean, stdev;
 
+  sum = 0.0;
   for (int i = 0; i < num_samples; ++i) {
     x = r1.uniformReal();
     EXPECT_TRUE(x > 0 && x < 1);
@@ -29,7 +30,7 @@ TEST(RandomTest, UniformReal) {
   stdev = sqrt(1.0/12.0);
   EXPECT_TRUE(sum > (mean - stdev) && sum < (mean + stdev));
 
-  sum = 0;
+  sum = 0.0;
   for (int i = 0; i < num_samples; ++i) {
     x = r1.uniformReal(4.5, 17.1);
     EXPECT_TRUE(x > 4.5 && x < 17.1);
@@ -48,6 +49,7 @@ TEST(RandomTest, UniformInt) {
   int x;
   double sum, mean, stdev;
 
+  sum = 0.0;
   for (int i = 0; i < num_samples; ++i) {
     x = r1.uniformInt(-39, 91);
     EXPECT_TRUE(x > -40 && x < 92);

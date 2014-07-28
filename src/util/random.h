@@ -36,10 +36,3 @@ class Random {
 };
 
 #endif // RANDOM_H
-/*
-  virtual ~Random();
-
-  Vector3D randPoint(Vector3D min, Vector3D max);
-  bool metropolis(double ratio);
-
-*/

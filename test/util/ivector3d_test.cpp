@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../src/util/ivector3d.h"
+#include "../../src/util/ivector3d.h"
 
 TEST(IVector3DTest, Construction) {
   IVector3D v1;
