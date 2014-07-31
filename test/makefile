@@ -17,8 +17,10 @@ GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
 								$(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h
 
-TESTS = util/vector3d_test.o util/ivector3d_test.o util/random_test.o base/box_test.o
-OBJS = ../obj/util/vector3d.o ../obj/util/ivector3d.o ../obj/util/random.o ../obj/base/box.o
+TESTS =  util/vector3d_test.o util/ivector3d_test.o util/random_test.o
+TESTS += base/box_test.o base/particle_test.o
+OBJS =  ../obj/util/vector3d.o ../obj/util/ivector3d.o ../obj/util/random.o 
+OBJS += ../obj/base/box.o ../obj/base/particle.o
 
 .PHONY: clean
 
