@@ -12,6 +12,7 @@ enum ParticleType {
 class Particle {
  public:
   Particle();
+  Particle(int index, ParticleType type);
   Particle(int index, double x, double y, double z);
   Particle(int index, double x, double y, double z, ParticleType type);
   Particle(int index, Vector3D pos, ParticleType type);

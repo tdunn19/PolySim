@@ -10,6 +10,13 @@ Particle::Particle() : index(0), type(solvent_type) {
   force.zero();
 }
 
+Particle::Particle(int index, ParticleType type)
+    : index(index), type(type) {
+  pos.zero();
+  vel.zero();
+  force.zero();
+}
+
 Particle::Particle(int index, double x, double y, double z)
     : index(index), pos(x, y, z), type(solvent_type) {
   vel.zero();

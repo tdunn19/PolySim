@@ -19,12 +19,12 @@ Box::Box(Vector3D length) : length(length) {
   volume = length.x * length.y * length.z;
 }
 
-double Box::distance(const Vector3D& v1, const Vector3D& v2) {
+double Box::distance(const Vector3D& v1, const Vector3D& v2) const {
   Vector3D dr = pbcDisplacement(v1, v2);
   return dr.length();
 }
 
-Vector3D Box::pbcDisplacement(const Vector3D& v1, const Vector3D& v2) {
+Vector3D Box::pbcDisplacement(const Vector3D& v1, const Vector3D& v2) const {
   Vector3D dr = v1 - v2;
 
   if (dr.x > half_length.x) {
@@ -48,7 +48,7 @@ Vector3D Box::pbcDisplacement(const Vector3D& v1, const Vector3D& v2) {
   return dr;
 }
 
-void Box::pbcPosition(Vector3D& pos) {
+void Box::pbcPosition(Vector3D& pos) const {
   if (pos.x >= length.x) {
     pos.x -= length.x;
   } else if (pos.x < 0) {
@@ -68,7 +68,7 @@ void Box::pbcPosition(Vector3D& pos) {
   }
 } 
 
-Vector3D Box::randomPoint(Random& rng) {
+Vector3D Box::randomPoint(Random& rng) const {
   Vector3D min;
   Vector3D max = length;
 
