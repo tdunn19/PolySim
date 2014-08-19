@@ -1,5 +1,7 @@
 #include "gtest/gtest.h"
 #include "../../src/base/particle.h"
+#include "../../src/base/box.h"
+#include "../../src/base/wall.h"
 
 TEST(ParticleTest, Construction) {
   Particle p1;
@@ -37,5 +39,65 @@ TEST(ParticleTest, Construction) {
               p6.vel == p7.vel &&
               p6.force == p7.force &&
               p6.type == p7.type);
+
+  p3.side = cis;
+  EXPECT_EQ(p3.side, cis);
+  p4.side = pore;
+  EXPECT_EQ(p4.side, pore);
+  p5.side = trans;
+  EXPECT_EQ(p5.side, trans);
+}
+
+TEST(ParticleTest, Functions) {
+  Box b1(12.7, 9.6, 16.6);
+  Wall w1(b1, 3, 3.0, 1);
+  w1.initialize(0);
+  
+  Particle p1(w1.num_particles, monomer_type);
+  Particle p2(p1.index+1, 5.65, 0.3, -0.5);
+  Particle p3(p2.index+1, 7.0, 5.23, 15.8, monomer_type);
+  Particle p4(p3.index+1, Vector3D(6.95, 5.47, 7.607), pore_type);
+  Particle p5(p4.index+1, Vector3D(12.5, 1.2, 8.3), Vector3D(0.24, -0.1, 3.9), pore_type);
+
+  EXPECT_FALSE(p1.isInPore(w1) || p1.isInWall(w1));
+  EXPECT_FALSE(p2.isInPore(w1) || p2.isInWall(w1));
+  EXPECT_FALSE(p3.isInPore(w1) || p3.isInWall(w1));
+  EXPECT_TRUE(p4.isInPore(w1) && !p4.isInWall(w1));
+  EXPECT_TRUE(!p5.isInPore(w1) && p5.isInWall(w1));
+  EXPECT_EQ(w1.particles[w1.num_particles-1].index, 752);
+  EXPECT_EQ(p1.index, 753);
+
+  p1.updateSide(w1);
+  EXPECT_EQ(p1.side, 0);
+  p2.updateSide(w1);
+  EXPECT_EQ(p2.side, cis);
+  p3.updateSide(w1);
+  EXPECT_EQ(p3.side, trans);
+  p4.updateSide(w1);
+  EXPECT_EQ(p4.side, pore);
+  p4.pos.z -= 0.1;
+  p4.updateSide(w1);
+  EXPECT_EQ(p4.side, cis);
+  p5.updateSide(w1);
+  EXPECT_EQ(p5.side, pore);
+  p5.pos.z += 0.7;
+  p5.updateSide(w1);
+  EXPECT_EQ(p5.side, trans);
+
+  std::vector<Particle> particles;
+  particles.push_back(p1);
+  particles.push_back(p2);
+  particles.push_back(p3);
+  particles.push_back(p4);
+  particles.push_back(p5);
+
+  Wall w2(b1, 1, 3.0, 0);
+  w2.initialize(p5.index+1);
+
+  for (Particle::Iterator part = particles.begin(); part != particles.end(); ++part) {
+    EXPECT_FALSE(part->isInPore(w2) || part->isInWall(w2));
+    part->updateSide(w2);
+    EXPECT_TRUE(part->side == cis || part->side == trans);
+  }
 }
 

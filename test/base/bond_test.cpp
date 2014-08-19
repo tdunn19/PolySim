@@ -41,7 +41,5 @@ TEST(BondTest, Functions) {
   EXPECT_DOUBLE_EQ(b4.forceFENE(box).length(), 23.472222222222261);
   EXPECT_DOUBLE_EQ(b4.forceFENE(box).x, -23.472222222222261);
   EXPECT_DOUBLE_EQ(b4.forceFENE(box).y, 0.0);
-
-  std::cout << b3 << std::endl;
 }
 

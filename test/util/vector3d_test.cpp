@@ -50,6 +50,18 @@ TEST(Vector3DTest, Operators) {
 
   v4 *= a;
   EXPECT_TRUE(v2 == v4);
+
+  Vector3D v6(0.84, 15.2, 84.1);
+  IVector3D v7(1, 3, -2);
+
+  Vector3D v8 = v6 / v1;
+  EXPECT_DOUBLE_EQ(v8.z, 5.279347143753923);
+
+  Vector3D v9 = v6 / v7;
+  EXPECT_DOUBLE_EQ(v9.y, 5.0666666666666664);
+
+  v9 = a;
+  EXPECT_DOUBLE_EQ(v9.x, 3.29);
 }
 
 TEST(Vector3DTest, Functions) {

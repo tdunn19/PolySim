@@ -1,9 +1,9 @@
 #include "polymer.h"
 
-Polymer::Polymer() : num_monomers(10) {
+Polymer::Polymer() : num_monomers(10), num_bonds(9) {
 }
 
-Polymer::Polymer(int num_monomers) : num_monomers(num_monomers) {
+Polymer::Polymer(int num_monomers) : num_monomers(num_monomers), num_bonds(num_monomers-1) {
 }
 
 void Polymer::initialize(int index) {
@@ -11,9 +11,8 @@ void Polymer::initialize(int index) {
     monomers.push_back(Particle(index+i, monomer_type));
   }
 
-  for (int i = 0; i < num_monomers-1; ++i) {
+  for (int i = 0; i < num_bonds; ++i) {
     bonds.push_back(Bond(monomers[i], monomers[i+1]));
-    num_bonds++;
   }
 }
 

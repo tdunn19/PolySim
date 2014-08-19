@@ -5,6 +5,8 @@
 #include <cmath>
 #include <limits>
 
+#include "ivector3d.h"
+
 class Vector3D {
  public:
   double x, y, z;
@@ -19,6 +21,9 @@ class Vector3D {
   friend Vector3D operator* (double a, const Vector3D& v);
   friend Vector3D operator* (const Vector3D& v, double a);
   Vector3D operator/ (double a) const;
+  Vector3D operator/ (const Vector3D& v) const;
+  Vector3D operator/ (const IVector3D& v) const;
+  Vector3D operator= (double a);
   Vector3D operator= (const Vector3D& v);
   Vector3D operator+= (const Vector3D& v);
   Vector3D operator-= (const Vector3D& v);

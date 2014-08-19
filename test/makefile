@@ -18,9 +18,9 @@ GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h
 
 TESTS =  util/vector3d_test.o util/ivector3d_test.o util/random_test.o
-TESTS += base/box_test.o base/particle_test.o base/bond_test.o
+TESTS += base/box_test.o base/particle_test.o base/bond_test.o base/polymer_test.o base/wall_test.o
 OBJS =  ../obj/util/vector3d.o ../obj/util/ivector3d.o ../obj/util/random.o 
-OBJS += ../obj/base/box.o ../obj/base/particle.o ../obj/base/bond.o
+OBJS += ../obj/base/box.o ../obj/base/particle.o ../obj/base/bond.o ../obj/base/polymer.o ../obj/base/wall.o
 
 .PHONY: clean
 
@@ -49,5 +49,3 @@ gtest_main.a : gtest-all.o gtest_main.o
 clean :
 	rm -f gtest.a gtest_main.a *.o */*.o $(OUT)
 
-
-#$(TESTS) : %.o : %.cpp $(GTEST_HEADERS)

@@ -39,6 +39,21 @@ Vector3D Vector3D::operator/ (double a) const {
   return Vector3D((x / a), (y / a), (z / a));
 }
 
+Vector3D Vector3D::operator/ (const Vector3D& v) const {
+  return Vector3D((x / v.x), (y / v.y), (z / v.z));
+}
+
+Vector3D Vector3D::operator/ (const IVector3D& v) const {
+  return Vector3D((x / v.x), (y / v.y), (z / v.z));
+}
+
+Vector3D Vector3D::operator= (double a) {
+  x = a;
+  y = a;
+  z = a;
+  return *this;
+}
+
 Vector3D Vector3D::operator= (const Vector3D& v) {
   x = v.x;
   y = v.y;
